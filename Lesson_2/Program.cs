@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 
 namespace Lesson_2
 {
-    class Program
-    {
-
-        public struct ItemRange
+    
+    public struct ItemRange
         {
-            public bool TryParseRange(string range, out int start, out int end)
+            
+            public int startInterval;
+            public int endInterval;
+            
+            public static bool TryParseRange(string range, out int start, out int end)
             {
-                string border_before = "({[";
-                string border_after = ")}]";
+                string borderBefore = "({[";
+                string borderAfter = ")}]";
                 bool allcorrect = false;
-                if (border_before.Contains(range[0]) && border_after.Contains(range[range.Length - 1]))
+                start = 0;
+                end = 0;
+                if (borderBefore.Contains(range[0]) && borderAfter.Contains(range[range.Length - 2]))
                 {
                     string[] items = range.Substring(1, range.Length-1).Split(',');
                     if (items.Length == 2)
@@ -24,33 +28,37 @@ namespace Lesson_2
                         allcorrect = int.TryParse(items[0], out start) & int.TryParse(items[1], out end);
                     }
                 }
-                start = 0;
-                end = 0;
                 return allcorrect;
             }
 
 
-            public bool IsDigitInRange(int digit, params string[] ranges)
+            public bool IsDigitInRange(int digit, bool strong = false, params ItemRange[] ranges)
             {
+                bool result = true;
                 foreach (var range in ranges)
                 {
-                    int start = 0;
-                    int end = 0;
-
-                    if (TryParseRange(range, out start, out end))
+                    if (strong)
                     {
-                        if (digit > start & digit < end)
+                        if (digit < range.startInterval && digit > range.endInterval)
                         {
-                            return true;
+                            result = false;
+                        }
+                    }
+                    else
+                    {
+                        if (digit <= range.startInterval && digit >= range.endInterval)
+                        {
+                            result = false;
                         }
                     }
                 }
-                return false;
+                return result;
             }
 
         }
-
-
+    
+    class Program
+    {
         static void Main(string[] args)
         {
         }
