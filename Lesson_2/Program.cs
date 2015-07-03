@@ -13,7 +13,7 @@ namespace Lesson_2
             public int startInterval;
             public int endInterval;
             
-            public static bool TryParseRange(string range, out int start, out int end)
+            public static bool TryParseRange(string range, out ItemRange range)
             {
                 string borderBefore = "({[";
                 string borderAfter = ")}]";
@@ -25,7 +25,7 @@ namespace Lesson_2
                     string[] items = range.Substring(1, range.Length-1).Split(',');
                     if (items.Length == 2)
                     {
-                        allcorrect = int.TryParse(items[0], out start) & int.TryParse(items[1], out end);
+                        allcorrect = int.TryParse(items[0], out range.startInterval) & int.TryParse(items[1], out range.endInterval);
                     }
                 }
                 return allcorrect;
