@@ -58,7 +58,7 @@ namespace TASK_2
                 right = new Point(0, 0);
                 if (points.Length == 2)
                 {
-                    return TryParsePoint(points[0], out left.x, out left.y) & TryParsePoint(points[0], out right.x, out right.y);
+                    return TryParsePoint(points[0], out left.x, out left.y) & TryParsePoint(points[1], out right.x, out right.y);
                 }
                 
                 return false;
